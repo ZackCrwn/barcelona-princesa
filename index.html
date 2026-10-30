@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=37"></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=38"></head>
 <body><div class="book-shell"><aside class="side-menu"><div class="menu-brand"><span>✧</span><strong>Diario mágico</strong><small>BARCELONA · 2027</small></div><nav class="menu-nav">
 <button class="menu-link active" data-menu-home><span>⌂</span> Portada</button>
 <div class="menu-caption">EL DIARIO</div><button class="menu-link" data-menu-page="0"><span>♡</span> Bienvenida</button><button class="menu-link" data-menu-page="1"><span>☷</span> Índice</button>
@@ -106,9 +106,10 @@
   if(!view){console.error('No existe el panel:',name);return}
   const current=pages.find(page=>page.classList.contains('active'));
   if(current)previous={type:'page',index:current.id.replace('diary-page-','')};
-  cover.hidden=true;cover.style.display='none';
-  reader.hidden=true;reader.style.display='none';
-  panel.hidden=false;panel.style.display='block';
+  cover.hidden=true;cover.style.setProperty('display','none','important');
+  pages.forEach(page=>{page.hidden=true;page.style.setProperty('display','none','important');page.classList.remove('active')});
+  reader.hidden=true;reader.style.setProperty('display','none','important');
+  panel.hidden=false;panel.style.setProperty('display','block','important');
   panel.querySelectorAll('.standalone-view').forEach(item=>{item.hidden=true;item.style.display='none'});
   view.hidden=false;view.style.display='block';
   activeButton(button);window.scrollTo(0,0);
