@@ -5,7 +5,8 @@ const backupTools=document.querySelector('.backup-tools');
 if(backupTools)document.querySelector('#backup-tools-slot').appendChild(backupTools);
 const pages=[...document.querySelectorAll('.book-content')];let current=0;
 const cover=document.querySelector('#cover'),reader=document.querySelector('#reader'),panel=document.querySelector('#standalone-panel');
-const show=n=>{current=Math.max(0,Math.min(pages.length-1,n));pages.forEach((p,i)=>p.classList.toggle('active',i===current));};\nlet returnTo={type:'cover',index:0};
+const show=n=>{current=Math.max(0,Math.min(pages.length-1,n));pages.forEach((p,i)=>p.classList.toggle('active',i===current));};
+let returnTo={type:'cover',index:0};
 function activeMenu(button){document.querySelectorAll('.menu-link').forEach(x=>x.classList.toggle('active',x===button));}
 function openMenuPage(n,button){cover.hidden=true;panel.hidden=true;reader.hidden=false;show(n);returnTo={type:'reader',index:current};activeMenu(button);window.scrollTo({top:0,behavior:'smooth'});}
 function openMenuPanel(name,button){if(panel.hidden)returnTo={type:cover.hidden?(reader.hidden?'cover':'reader'):'cover',index:current};cover.hidden=true;reader.hidden=true;panel.hidden=false;document.querySelectorAll('.standalone-view').forEach(v=>v.hidden=true);const target=document.querySelector('#standalone-'+name);if(target)target.hidden=false;activeMenu(button);window.scrollTo({top:0,behavior:'smooth'});}
