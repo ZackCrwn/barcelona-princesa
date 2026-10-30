@@ -15,9 +15,81 @@ searchBox?.addEventListener('input',renderPlaces);filterBox?.addEventListener('c
 placesRoot?.addEventListener('change',e=>{const x=e.target.closest('[data-visited]');if(!x)return;visited[x.dataset.visited]=x.checked;localStorage.setItem(visitedKey,JSON.stringify(visited));});
 renderPlaces();
 
-/* Dibujo: conserva el trabajo en este dispositivo */
-document.querySelectorAll('.envelope').forEach(b=>b.addEventListener('click',()=>{const body=b.nextElementSibling;body.classList.toggle('open');b.setAttribute('aria-expanded',body.classList.contains('open')?'true':'false')}));
-const canvas=document.querySelector('#drawing');if(canvas){const ctx=canvas.getContext('2d');let drawing=false;const DRAW_KEY='andrea-drawing-v1';let savedDrawing=localStorage.getItem(DRAW_KEY);const resize=()=>{const old=document.createElement('canvas');old.width=canvas.width;old.height=canvas.height;old.getContext('2d').drawImage(canvas,0,0);canvas.width=canvas.clientWidth*devicePixelRatio;canvas.height=300*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio);ctx.drawImage(old,0,0,old.width,old.height,0,0,canvas.clientWidth,300);ctx.lineCap='round';ctx.lineJoin='round';if(savedDrawing){const img=new Image();img.onload=()=>ctx.drawImage(img,0,0,canvas.clientWidth,300);img.src=savedDrawing;}};resize();window.addEventListener('resize',resize);const point=e=>{const r=canvas.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]};canvas.addEventListener('pointerdown',e=>{drawing=true;canvas.setPointerCapture(e.pointerId);const [x,y]=point(e);ctx.beginPath();ctx.moveTo(x,y)});canvas.addEventListener('pointermove',e=>{if(!drawing)return;const [x,y]=point(e);ctx.strokeStyle=document.querySelector('#pen-color').value;ctx.lineWidth=Number(document.querySelector('#pen-size').value);ctx.lineTo(x,y);ctx.stroke()});canvas.addEventListener('pointerup',()=>{drawing=false;try{localStorage.setItem(DRAW_KEY,canvas.toDataURL('image/png'))}catch{}});document.querySelector('#clear-drawing').addEventListener('click',()=>{ctx.clearRect(0,0,canvas.width,canvas.height);localStorage.removeItem(DRAW_KEY);});document.querySelector('#save-drawing').addEventListener('click',()=>{const a=document.createElement('a');a.download='recuerdo-andrea.png';a.href=canvas.toDataURL('image/png');a.click()});}
+/* Dibujo: inicializa solo cuando la página está visible y el canvas tiene tamaño */
+document.querySelectorAll('.envelope').forEach(b=>b.addEventListener('click',()=>{
+ const body=b.nextElementSibling;
+ if(!body)return;
+ body.classList.toggle('open');
+ b.setAttribute('aria-expanded',body.classList.contains('open')?'true':'false');
+}));
+const canvas=document.querySelector('#drawing');
+if(canvas){
+ const ctx=canvas.getContext('2d');
+ let drawing=false;
+ let savedDrawing=localStorage.getItem('andrea-drawing-v1');
+ let lastWidth=0,lastHeight=0;
+ const dpr=()=>Math.max(1,window.devicePixelRatio||1);
+ function resizeDrawing(){
+  const width=Math.floor(canvas.getBoundingClientRect().width);
+  if(width<=0)return;
+  const height=300,scale=dpr();
+  const pixelWidth=Math.round(width*scale),pixelHeight=Math.round(height*scale);
+  if(canvas.width===pixelWidth&&canvas.height===pixelHeight)return;
+  let snapshot=savedDrawing;
+  if(canvas.width>0&&canvas.height>0){
+   try{snapshot=canvas.toDataURL('image/png');savedDrawing=snapshot;}catch{}
+  }
+  canvas.width=pixelWidth;canvas.height=pixelHeight;
+  ctx.setTransform(scale,0,0,scale,0,0);
+  ctx.lineCap='round';ctx.lineJoin='round';
+  if(snapshot){
+   const img=new Image();
+   img.onload=()=>{if(canvas.width>0)ctx.drawImage(img,0,0,width,height);};
+   img.src=snapshot;
+  }
+  lastWidth=width;lastHeight=height;
+ }
+ if('ResizeObserver' in window){
+  const observer=new ResizeObserver(resizeDrawing);
+  observer.observe(canvas);
+ }
+ window.addEventListener('resize',resizeDrawing);
+ window.addEventListener('pageshow',resizeDrawing);
+ resizeDrawing();
+ const point=e=>{
+  const r=canvas.getBoundingClientRect();
+  return [e.clientX-r.left,e.clientY-r.top];
+ };
+ canvas.addEventListener('pointerdown',e=>{
+  if(canvas.width===0||canvas.getBoundingClientRect().width===0)return;
+  drawing=true;canvas.setPointerCapture(e.pointerId);
+  const [x,y]=point(e);ctx.beginPath();ctx.moveTo(x,y);
+ });
+ canvas.addEventListener('pointermove',e=>{
+  if(!drawing)return;
+  const [x,y]=point(e);
+  const color=document.querySelector('#pen-color');
+  const size=document.querySelector('#pen-size');
+  ctx.strokeStyle=color?.value||'#b87996';
+  ctx.lineWidth=Number(size?.value||3);
+  ctx.lineTo(x,y);ctx.stroke();
+ });
+ const stopDrawing=()=>{
+  if(!drawing)return;
+  drawing=false;
+  try{savedDrawing=canvas.toDataURL('image/png');localStorage.setItem('andrea-drawing-v1',savedDrawing);}catch{}
+ };
+ canvas.addEventListener('pointerup',stopDrawing);
+ canvas.addEventListener('pointercancel',stopDrawing);
+ document.querySelector('#clear-drawing')?.addEventListener('click',()=>{
+  if(canvas.width>0)ctx.clearRect(0,0,canvas.width/dpr(),canvas.height/dpr());
+  savedDrawing=null;localStorage.removeItem('andrea-drawing-v1');
+ });
+ document.querySelector('#save-drawing')?.addEventListener('click',()=>{
+  if(canvas.width===0)return;
+  const a=document.createElement('a');a.download='recuerdo-andrea.png';a.href=canvas.toDataURL('image/png');a.click();
+ });
+}
 const budgetFields=[...document.querySelectorAll('.budget-field')];
 const budgetTotal=document.querySelector('#budget-total');
 function updateBudget(){if(!budgetTotal)return;const total=budgetFields.reduce((n,x)=>n+(Number(x.value)||0),0);budgetTotal.textContent=new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(total);localStorage.setItem('andrea-budget-v1',JSON.stringify(budgetFields.map(x=>x.value)));}
