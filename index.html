@@ -18,7 +18,27 @@
 </div></section>
 <section id="standalone-panel" class="standalone-panel" hidden>
 <div class="standalone-head"><button type="button" class="back-home" data-close-panel>← Volver a la portada</button><span id="standalone-kicker">ESPACIO PERSONAL</span></div>
-<div id="standalone-savings" class="standalone-view" hidden></div>
+<div id="standalone-savings" class="standalone-view" hidden>
+<div id="saving-section" class="saving-section">
+<div class="chapter-label">Mi alcancía · Barcelona 2027</div><h2>Un sueño que va tomando forma.</h2>
+<p class="lead">Registra tus ahorros y consulta cuánto falta para completar tu meta.</p>
+<div class="saving-dashboard">
+<section class="saving-main"><div class="saving-stats">
+<article><span>AHORRADO</span><strong id="saving-total">$0</strong></article>
+<article><span>FALTA</span><strong id="saving-remaining">$50,000</strong></article>
+<article><span>PROGRESO</span><strong id="saving-progress">0%</strong></article>
+<article><span>FECHA OBJETIVO</span><strong id="saving-days">—</strong></article>
+</div>
+<div class="progress-label"><span>Mi progreso</span><strong id="saving-progress-label">Meta de viaje</strong></div><div class="progress-track"><div id="saving-bar"></div></div>
+<div class="saving-recommendations"><article><small>AHORRO MENSUAL SUGERIDO</small><strong id="saving-monthly">$0</strong></article><article><small>AHORRO SEMANAL SUGERIDO</small><strong id="saving-weekly">$0</strong></article><article><small>OBJETIVO</small><strong>$50,000 MXN</strong></article></div>
+</section>
+<div class="saving-side">
+<section class="saving-edit"><h3>Mi meta</h3><form id="saving-settings"><label>Meta de ahorro (MXN)<input id="saving-goal" type="number" min="1" required></label><label>Fecha objetivo<input id="saving-date" type="date" required></label><button class="saving-button" type="submit">Guardar meta</button></form></section>
+<section class="saving-add"><h3>Registrar movimiento</h3><form id="saving-form"><label>Tipo<select id="saving-type"><option value="deposito">Ahorro / depósito</option><option value="retiro">Retiro</option></select></label><label>Cantidad (MXN)<input id="saving-amount" type="number" min="1" step="0.01" required placeholder="500"></label><label>Fecha<input id="saving-movement-date" type="date" required></label><label>Nota<input id="saving-note" type="text" maxlength="90" placeholder="Ahorro de la semana"></label><button class="saving-button" type="submit">Añadir movimiento</button></form></section>
+</div></div>
+<section class="saving-history"><h3>Mis movimientos</h3><div id="saving-movements"><p class="saving-empty">Cargando movimientos…</p></div></section>
+<div class="saving-tools"><button type="button" id="saving-export">Exportar ahorro</button><label for="saving-import">Importar respaldo</label><input id="saving-import" type="file" accept="application/json" hidden></div>
+</div></div>
 <div id="standalone-settings" class="standalone-view" hidden><div class="chapter-label">Preferencias del diario</div><h2>Configuración</h2><p class="lead">Administra tus datos y conserva una copia de tus avances. El guardado actual funciona en este dispositivo; la sincronización entre dispositivos requiere conectar la base de datos compartida.</p><div id="backup-tools-slot"></div><div class="settings-note"><strong>Privacidad</strong><p>El acceso al diario está protegido con contraseña. No compartas la clave con otras personas.</p></div></div>
 </section>
 <div id="reader" hidden>
@@ -52,7 +72,7 @@
 <section id="diary-page-7" class="book-content"><div class="chapter-label">Capítulo 07 · Mis páginas libres</div><h2>Este espacio es tuyo.</h2><p class="lead">Dibuja algo que viste, garabatea mientras tomas un café o deja aquí una idea. No tiene que quedar perfecto.</p><div class="draw-wrap"><div class="draw-tools"><label class="small">Color <input id="pen-color" type="color" value="#b87996"></label><label class="small">Trazo <input id="pen-size" type="range" min="1" max="14" value="3"></label><button id="clear-drawing">Borrar</button><button id="save-drawing">Guardar dibujo</button></div><canvas id="drawing" aria-label="Lienzo para dibujar"></canvas></div><p class="small">El dibujo se descarga como imagen PNG en este dispositivo.</p></section>
 <section id="diary-page-8" class="book-content"><div class="chapter-label">Capítulo 08 · Al volver</div><h2>La aventura se queda contigo.</h2><p class="lead">Cuando regreses, este libro seguirá aquí para que recuerdes lo que te hizo sonreír, lo que aprendiste y los pequeños momentos que hicieron especial el viaje.</p><div class="note-card"><h3>Una última página</h3><p class="lead">No importa cuántas ciudades conozcas: ojalá nunca pierdas esa parte de ti que se emociona al descubrir algo nuevo.</p><p class="small">Con todo mi cariño, Isaac ♡</p></div></section>
 
-</div></main></div><script src="data.js?v=24"></script><script src="diario.js?v=25"></script><script src="ahorro.js?v=25"></script><script src="auto-update.js?v=24"></script><script>
+</div></main></div><script src="data.js?v=24"></script><script src="diario.js?v=25"></script><script src="ahorro.js?v=26"></script><script src="auto-update.js?v=24"></script><script>
 /* Navegación independiente: funciona aunque falle otro módulo del diario. */
 (function(){
  const $=s=>document.querySelector(s);
