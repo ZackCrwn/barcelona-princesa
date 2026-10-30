@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=34"></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=35"></head>
 <body><div class="book-shell"><aside class="side-menu"><div class="menu-brand"><span>✧</span><strong>Diario mágico</strong><small>BARCELONA · 2027</small></div><nav class="menu-nav">
 <button class="menu-link active" data-menu-home><span>⌂</span> Portada</button>
 <div class="menu-caption">EL DIARIO</div><button class="menu-link" data-menu-page="0"><span>♡</span> Bienvenida</button><button class="menu-link" data-menu-page="1"><span>☷</span> Índice</button>
@@ -73,89 +73,56 @@
 <section id="diary-page-8" class="book-content"><div class="chapter-label">Capítulo 08 · Al volver</div><h2>La aventura se queda contigo.</h2><p class="lead">Cuando regreses, este libro seguirá aquí para que recuerdes lo que te hizo sonreír, lo que aprendiste y los pequeños momentos que hicieron especial el viaje.</p><div class="note-card"><h3>Una última página</h3><p class="lead">No importa cuántas ciudades conozcas: ojalá nunca pierdas esa parte de ti que se emociona al descubrir algo nuevo.</p><p class="small">Con todo mi cariño, Isaac ♡</p></div></section>
 
 </div></main></div><script src="data.js?v=24"></script><script src="diario.js?v=26"></script><script src="ahorro.js?v=26"></script><script src="auto-update.js?v=24"></script><script>
-/* Navegación directa: cada botón abre únicamente su página asignada. */
+/* Navegación restaurada: un único estado visible */
 (function(){
  const cover=document.getElementById('cover');
  const reader=document.getElementById('reader');
  const panel=document.getElementById('standalone-panel');
- const pages=Array.from(document.querySelectorAll('#reader .book-content'));
- const menuButtons=Array.from(document.querySelectorAll('.menu-link'));
+ const pages=[...document.querySelectorAll('#reader > .book-content')];
+ const menus=[...document.querySelectorAll('.menu-link')];
  let returnTo={type:'cover',index:0};
-
- function selectMenu(button){
-   menuButtons.forEach(item=>{
-     const active=item===button;
-     item.classList.toggle('active',active);
-     if(active)item.setAttribute('aria-current','page');
-     else item.removeAttribute('aria-current');
-   });
+ const select=btn=>menus.forEach(m=>{m.classList.toggle('active',m===btn);if(m===btn)m.setAttribute('aria-current','page');else m.removeAttribute('aria-current')});
+ function hidePages(){pages.forEach(p=>{p.classList.remove('active');p.hidden=true;p.style.removeProperty('display')})}
+ function showPage(n){
+  const page=document.getElementById('diary-page-'+n);
+  if(!page||!pages.includes(page))return;
+  cover.hidden=true;panel.hidden=true;reader.hidden=false;
+  cover.style.display='none';panel.style.display='none';reader.style.display='block';
+  hidePages();page.hidden=false;page.classList.add('active');
+  returnTo={type:'reader',index:Number(n)};
+  select(document.querySelector('.menu-link[data-menu-page="'+n+'"]'));
+  window.scrollTo(0,0);
  }
- function showPage(index){
-   const n=Number.parseInt(index,10);
-   const target=document.getElementById('diary-page-'+n);
-   if(!target)return;
-   cover.hidden=true;cover.style.setProperty('display','none','important');panel.hidden=true;panel.style.setProperty('display','none','important');reader.hidden=false;reader.style.setProperty('display','block','important');
-   pages.forEach(p=>{const visible=p===target;p.removeAttribute('hidden');p.style.setProperty('display',visible?'block':'none','important');p.classList.toggle('active',visible);});
-   returnTo={type:'reader',index:n};
-   selectMenu(document.querySelector('.menu-link[data-menu-page="'+n+'"]'));
-   window.scrollTo(0,0);
+ function showPanel(name,btn){
+  const view=document.getElementById('standalone-'+name);
+  if(!view)return;
+  if(!panel.hidden){const p=pages.find(x=>x.classList.contains('active'));if(p)returnTo={type:'reader',index:Number(p.id.split('-').pop())}}
+  cover.hidden=true;reader.hidden=true;panel.hidden=false;
+  cover.style.display='none';reader.style.display='none';panel.style.display='block';
+  panel.querySelectorAll('.standalone-view').forEach(v=>{v.hidden=true;v.style.display='none'});
+  view.hidden=false;view.style.display='block';
+  select(btn);window.scrollTo(0,0);
  }
- function showPanel(name,button){
-   if(panel.hidden){
-     const active=pages.find(p=>!p.hidden);
-     returnTo=active?{type:'reader',index:Number(active.id.split('-').pop())}:{type:'cover',index:0};
-   }
-   cover.hidden=true;cover.style.setProperty('display','none','important');reader.hidden=true;reader.style.setProperty('display','none','important');panel.hidden=false;panel.style.setProperty('display','block','important');
-   document.querySelectorAll('.standalone-view').forEach(v=>{v.hidden=true;v.style.setProperty('display','none','important');});
-   const view=document.getElementById('standalone-'+name);
-   if(view){view.hidden=false;view.style.setProperty('display','block','important');}
-   selectMenu(button);window.scrollTo(0,0);
- }
- pages.forEach(p=>{p.removeAttribute('hidden');p.style.setProperty('display','none','important');p.classList.remove('active');});
- selectMenu(document.querySelector('[data-menu-home]'));
-
- const savings=document.getElementById('saving-section');
- const savingsView=document.getElementById('standalone-savings');
- if(savings&&savingsView&&!savingsView.contains(savings))savingsView.appendChild(savings);
- const savingsChapter=savings&&savings.closest('.book-content');
- if(savingsChapter)savingsChapter.remove();
- const backup=document.querySelector('.backup-tools');
- const backupSlot=document.getElementById('backup-tools-slot');
- if(backup&&backupSlot&&!backupSlot.contains(backup))backupSlot.appendChild(backup);
-
- menuButtons.forEach(button=>{
-   button.addEventListener('click',function(event){
-     event.preventDefault();event.stopPropagation();
-     if(this.hasAttribute('data-menu-home')){
-       cover.hidden=false;cover.style.setProperty('display','grid','important');reader.hidden=true;reader.style.display='none';panel.hidden=true;panel.style.setProperty('display','none','important');
-       pages.forEach(p=>{p.removeAttribute('hidden');p.style.removeProperty('display');p.classList.remove('active');});
-       selectMenu(this);returnTo={type:'cover',index:0};window.scrollTo(0,0);
-     }else if(this.hasAttribute('data-menu-page')){
-       showPage(this.getAttribute('data-menu-page'));
-     }else if(this.hasAttribute('data-menu-panel')){
-       showPanel(this.getAttribute('data-menu-panel'),this);
-     }
-   });
- });
-
+ hidePages();
+ menus.forEach(btn=>btn.addEventListener('click',e=>{
+  e.preventDefault();
+  if(btn.hasAttribute('data-menu-home')){
+   hidePages();cover.hidden=false;reader.hidden=true;panel.hidden=true;
+   cover.style.display='grid';reader.style.display='none';panel.style.display='none';
+   select(btn);returnTo={type:'cover',index:0};window.scrollTo(0,0);
+  }else if(btn.hasAttribute('data-menu-page'))showPage(btn.dataset.menuPage);
+  else if(btn.hasAttribute('data-menu-panel'))showPanel(btn.dataset.menuPanel,btn);
+ }));
  document.getElementById('open-book')?.addEventListener('click',()=>showPage(0));
- document.querySelectorAll('[data-page],[data-direct-page]').forEach(button=>{
-   button.addEventListener('click',function(event){
-     event.preventDefault();event.stopPropagation();
-     showPage(this.getAttribute('data-page')??this.getAttribute('data-direct-page'));
-   });
- });
- document.querySelectorAll('[data-open-panel]').forEach(button=>{
-   button.addEventListener('click',function(event){
-     event.preventDefault();event.stopPropagation();
-     const name=this.getAttribute('data-open-panel');
-     showPanel(name,document.querySelector('.menu-link[data-menu-panel="'+name+'"]'));
-   });
- });
- document.querySelector('[data-close-panel]')?.addEventListener('click',function(event){
-   event.preventDefault();event.stopPropagation();panel.hidden=true;panel.style.display='none';
-   if(returnTo.type==='reader')showPage(returnTo.index);
-   else{cover.hidden=false;cover.style.display='grid';reader.hidden=true;reader.style.display='none';selectMenu(document.querySelector('[data-menu-home]'));window.scrollTo(0,0);}
+ document.querySelectorAll('[data-page],[data-direct-page]').forEach(btn=>btn.addEventListener('click',e=>{
+  e.preventDefault();showPage(btn.dataset.page??btn.dataset.directPage);
+ }));
+ document.querySelectorAll('[data-open-panel]').forEach(btn=>btn.addEventListener('click',e=>{
+  e.preventDefault();const name=btn.dataset.openPanel;showPanel(name,document.querySelector('.menu-link[data-menu-panel="'+name+'"]'));
+ }));
+ document.querySelector('[data-close-panel]')?.addEventListener('click',e=>{
+  e.preventDefault();if(returnTo.type==='reader')showPage(returnTo.index);
+  else{panel.hidden=true;panel.style.display='none';cover.hidden=false;cover.style.display='grid';reader.hidden=true;reader.style.display='none';select(document.querySelector('[data-menu-home]'))}
  });
 })();
 </script></body></html>
