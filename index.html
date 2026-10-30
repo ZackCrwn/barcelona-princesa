@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=33"></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=34"></head>
 <body><div class="book-shell"><aside class="side-menu"><div class="menu-brand"><span>✧</span><strong>Diario mágico</strong><small>BARCELONA · 2027</small></div><nav class="menu-nav">
 <button class="menu-link active" data-menu-home><span>⌂</span> Portada</button>
 <div class="menu-caption">EL DIARIO</div><button class="menu-link" data-menu-page="0"><span>♡</span> Bienvenida</button><button class="menu-link" data-menu-page="1"><span>☷</span> Índice</button>
@@ -94,8 +94,8 @@
    const n=Number.parseInt(index,10);
    const target=document.getElementById('diary-page-'+n);
    if(!target)return;
-   cover.hidden=true;cover.style.display='none';panel.hidden=true;panel.style.display='none';reader.hidden=false;reader.style.display='block';
-   pages.forEach(p=>{p.removeAttribute('hidden');p.style.removeProperty('display');p.classList.toggle('active',p===target);});
+   cover.hidden=true;cover.style.setProperty('display','none','important');panel.hidden=true;panel.style.setProperty('display','none','important');reader.hidden=false;reader.style.setProperty('display','block','important');
+   pages.forEach(p=>{const visible=p===target;p.removeAttribute('hidden');p.style.setProperty('display',visible?'block':'none','important');p.classList.toggle('active',visible);});
    returnTo={type:'reader',index:n};
    selectMenu(document.querySelector('.menu-link[data-menu-page="'+n+'"]'));
    window.scrollTo(0,0);
@@ -105,13 +105,13 @@
      const active=pages.find(p=>!p.hidden);
      returnTo=active?{type:'reader',index:Number(active.id.split('-').pop())}:{type:'cover',index:0};
    }
-   cover.hidden=true;cover.style.display='none';reader.hidden=true;reader.style.display='none';panel.hidden=false;panel.style.display='block';
-   document.querySelectorAll('.standalone-view').forEach(v=>{v.hidden=true;v.style.display='none';});
+   cover.hidden=true;cover.style.setProperty('display','none','important');reader.hidden=true;reader.style.setProperty('display','none','important');panel.hidden=false;panel.style.setProperty('display','block','important');
+   document.querySelectorAll('.standalone-view').forEach(v=>{v.hidden=true;v.style.setProperty('display','none','important');});
    const view=document.getElementById('standalone-'+name);
-   if(view){view.hidden=false;view.style.display='block';}
+   if(view){view.hidden=false;view.style.setProperty('display','block','important');}
    selectMenu(button);window.scrollTo(0,0);
  }
- pages.forEach(p=>{p.removeAttribute('hidden');p.style.removeProperty('display');p.classList.remove('active');});
+ pages.forEach(p=>{p.removeAttribute('hidden');p.style.setProperty('display','none','important');p.classList.remove('active');});
  selectMenu(document.querySelector('[data-menu-home]'));
 
  const savings=document.getElementById('saving-section');
@@ -127,7 +127,7 @@
    button.addEventListener('click',function(event){
      event.preventDefault();event.stopPropagation();
      if(this.hasAttribute('data-menu-home')){
-       cover.hidden=false;cover.style.display='grid';reader.hidden=true;reader.style.display='none';panel.hidden=true;panel.style.display='none';
+       cover.hidden=false;cover.style.setProperty('display','grid','important');reader.hidden=true;reader.style.display='none';panel.hidden=true;panel.style.setProperty('display','none','important');
        pages.forEach(p=>{p.removeAttribute('hidden');p.style.removeProperty('display');p.classList.remove('active');});
        selectMenu(this);returnTo={type:'cover',index:0};window.scrollTo(0,0);
      }else if(this.hasAttribute('data-menu-page')){
