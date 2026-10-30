@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=21"></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=23"></head>
 <body><div class="book-shell"><aside class="side-menu"><div class="menu-brand"><span>✧</span><strong>Diario mágico</strong><small>BARCELONA · 2027</small></div><nav class="menu-nav">
 <button class="menu-link active" data-menu-home><span>⌂</span> Portada</button>
 <div class="menu-caption">EL DIARIO</div><button class="menu-link" data-menu-page="0"><span>♡</span> Bienvenida</button><button class="menu-link" data-menu-page="1"><span>☷</span> Índice</button>
@@ -63,4 +63,42 @@
 <section class="book-content"><div class="chapter-label">Capítulo 07 · Mis páginas libres</div><h2>Este espacio es tuyo.</h2><p class="lead">Dibuja algo que viste, garabatea mientras tomas un café o deja aquí una idea. No tiene que quedar perfecto.</p><div class="draw-wrap"><div class="draw-tools"><label class="small">Color <input id="pen-color" type="color" value="#b87996"></label><label class="small">Trazo <input id="pen-size" type="range" min="1" max="14" value="3"></label><button id="clear-drawing">Borrar</button><button id="save-drawing">Guardar dibujo</button></div><canvas id="drawing" aria-label="Lienzo para dibujar"></canvas></div><p class="small">El dibujo se descarga como imagen PNG en este dispositivo.</p></section>
 <section class="book-content"><div class="chapter-label">Capítulo 08 · Al volver</div><h2>La aventura se queda contigo.</h2><p class="lead">Cuando regreses, este libro seguirá aquí para que recuerdes lo que te hizo sonreír, lo que aprendiste y los pequeños momentos que hicieron especial el viaje.</p><div class="note-card"><h3>Una última página</h3><p class="lead">No importa cuántas ciudades conozcas: ojalá nunca pierdas esa parte de ti que se emociona al descubrir algo nuevo.</p><p class="small">Con todo mi cariño, Isaac ♡</p></div></section>
 
-</div></main></div><script src="data.js?v=21"></script><script src="diario.js?v=22"></script><script src="ahorro.js?v=21"></script><script src="auto-update.js?v=22"></script></body></html>
+</div></main></div><script src="data.js?v=23"></script><script src="diario.js?v=23"></script><script src="ahorro.js?v=23"></script><script src="auto-update.js?v=23"></script><script>
+/* Navegación independiente: funciona aunque falle otro módulo del diario. */
+(function(){
+ const $=s=>document.querySelector(s);
+ const cover=$('#cover'),reader=$('#reader'),panel=$('#standalone-panel');
+ const pages=Array.from(document.querySelectorAll('#reader .book-content'));
+ function mark(button){document.querySelectorAll('.menu-link').forEach(x=>x.classList.toggle('active',x===button));}
+ function page(n,button){
+  if(!pages.length)return;
+  n=Math.max(0,Math.min(pages.length-1,Number(n)||0));
+  cover.hidden=true;panel.hidden=true;reader.hidden=false;
+  pages.forEach((p,i)=>p.classList.toggle('active',i===n));
+  mark(button);window.scrollTo(0,0);
+ }
+ function separate(name,button){
+  cover.hidden=true;reader.hidden=true;panel.hidden=false;
+  document.querySelectorAll('.standalone-view').forEach(x=>x.hidden=true);
+  const view=$('#standalone-'+name);if(view)view.hidden=false;
+  mark(button);window.scrollTo(0,0);
+ }
+ const savings=$('#saving-section');
+ if(savings&&!$('#standalone-savings').contains(savings))$('#standalone-savings').appendChild(savings);
+ const savingsChapter=savings&&savings.closest('.book-content');
+ if(savingsChapter)savingsChapter.remove();
+ const backup=$('.backup-tools');
+ if(backup&&$('#backup-tools-slot')&&!$('#backup-tools-slot').contains(backup))$('#backup-tools-slot').appendChild(backup);
+ document.addEventListener('click',function(e){
+  const b=e.target.closest('button');if(!b)return;
+  if(b.matches('[data-menu-home]')){cover.hidden=false;reader.hidden=true;panel.hidden=true;mark(b);window.scrollTo(0,0);}
+  else if(b.matches('[data-menu-page]'))page(b.dataset.menuPage,b);
+  else if(b.matches('[data-menu-panel]'))separate(b.dataset.menuPanel,b);
+  else if(b.matches('#open-book'))page(0,document.querySelector('[data-menu-page="0"]'));
+  else if(b.matches('[data-page]'))page(b.dataset.page,document.querySelector('[data-menu-page="'+b.dataset.page+'"]'));
+  else if(b.matches('[data-direct-page]'))page(b.dataset.directPage,document.querySelector('[data-menu-page="'+b.dataset.directPage+'"]'));
+  else if(b.matches('[data-open-panel]'))separate(b.dataset.openPanel,document.querySelector('[data-menu-panel="'+b.dataset.openPanel+'"]'));
+  else if(b.matches('[data-close-panel]')){panel.hidden=true;cover.hidden=false;mark(document.querySelector('[data-menu-home]'));window.scrollTo(0,0);}
+ },true);
+})();
+</script></body></html>
