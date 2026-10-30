@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=35"></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=36"></head>
 <body><div class="book-shell"><aside class="side-menu"><div class="menu-brand"><span>✧</span><strong>Diario mágico</strong><small>BARCELONA · 2027</small></div><nav class="menu-nav">
 <button class="menu-link active" data-menu-home><span>⌂</span> Portada</button>
 <div class="menu-caption">EL DIARIO</div><button class="menu-link" data-menu-page="0"><span>♡</span> Bienvenida</button><button class="menu-link" data-menu-page="1"><span>☷</span> Índice</button>
@@ -78,17 +78,17 @@
  const cover=document.getElementById('cover');
  const reader=document.getElementById('reader');
  const panel=document.getElementById('standalone-panel');
- const pages=[...document.querySelectorAll('#reader > .book-content')];
+ const pages=[...document.querySelectorAll('#reader .book-content')];
  const menus=[...document.querySelectorAll('.menu-link')];
  let returnTo={type:'cover',index:0};
  const select=btn=>menus.forEach(m=>{m.classList.toggle('active',m===btn);if(m===btn)m.setAttribute('aria-current','page');else m.removeAttribute('aria-current')});
- function hidePages(){pages.forEach(p=>{p.classList.remove('active');p.hidden=true;p.style.removeProperty('display')})}
+ function hidePages(){pages.forEach(p=>{p.classList.remove('active');p.hidden=true;p.style.setProperty('display','none','important')})}
  function showPage(n){
   const page=document.getElementById('diary-page-'+n);
   if(!page||!pages.includes(page))return;
   cover.hidden=true;panel.hidden=true;reader.hidden=false;
   cover.style.display='none';panel.style.display='none';reader.style.display='block';
-  hidePages();page.hidden=false;page.classList.add('active');
+  hidePages();page.hidden=false;page.style.setProperty('display','block','important');page.classList.add('active');
   returnTo={type:'reader',index:Number(n)};
   select(document.querySelector('.menu-link[data-menu-page="'+n+'"]'));
   window.scrollTo(0,0);
