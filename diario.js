@@ -1,28 +1,3 @@
-(() => {
-const savingSection=document.querySelector('#saving-section');
-if(savingSection){document.querySelector('#standalone-savings').appendChild(savingSection);savingSection.closest('.book-content').remove();}
-const backupTools=document.querySelector('.backup-tools');
-if(backupTools)document.querySelector('#backup-tools-slot').appendChild(backupTools);
-const pages=[...document.querySelectorAll('.book-content')];let current=0;
-const cover=document.querySelector('#cover'),reader=document.querySelector('#reader'),panel=document.querySelector('#standalone-panel');
-const show=n=>{current=Math.max(0,Math.min(pages.length-1,n));pages.forEach((p,i)=>p.classList.toggle('active',i===current));};
-let returnTo={type:'cover',index:0};
-function activeMenu(button){document.querySelectorAll('.menu-link').forEach(x=>x.classList.toggle('active',x===button));}
-function openMenuPage(n,button){cover.hidden=true;panel.hidden=true;reader.hidden=false;show(n);returnTo={type:'reader',index:current};activeMenu(button);window.scrollTo({top:0,behavior:'smooth'});}
-function openMenuPanel(name,button){if(panel.hidden)returnTo={type:cover.hidden?(reader.hidden?'cover':'reader'):'cover',index:current};cover.hidden=true;reader.hidden=true;panel.hidden=false;document.querySelectorAll('.standalone-view').forEach(v=>v.hidden=true);const target=document.querySelector('#standalone-'+name);if(target)target.hidden=false;activeMenu(button);window.scrollTo({top:0,behavior:'smooth'});}
-document.addEventListener('click',event=>{
- const button=event.target.closest('button');
- if(!button)return;
- if(button.matches('[data-menu-home]')){cover.hidden=false;reader.hidden=true;panel.hidden=true;returnTo={type:'cover',index:0};activeMenu(button);return;}
- if(button.matches('[data-menu-page]')){openMenuPage(Number(button.dataset.menuPage),button);return;}
- if(button.matches('[data-menu-panel]')){openMenuPanel(button.dataset.menuPanel,button);return;}
- if(button.matches('#open-book')){openMenuPage(0,document.querySelector('[data-menu-page="0"]'));return;}
- if(button.matches('[data-page]')){openMenuPage(Number(button.dataset.page),document.querySelector('[data-menu-page="'+button.dataset.page+'"]'));return;}
- if(button.matches('[data-open-panel]')){openMenuPanel(button.dataset.openPanel,document.querySelector('[data-menu-panel="'+button.dataset.openPanel+'"]'));return;}
- if(button.matches('[data-direct-page]')){openMenuPage(Number(button.dataset.directPage),document.querySelector('[data-menu-page="'+button.dataset.directPage+'"]'));return;}
- if(button.matches('[data-close-panel]')){panel.hidden=true;if(returnTo.type==='reader'){cover.hidden=true;reader.hidden=false;show(returnTo.index);activeMenu(document.querySelector('[data-menu-page=\"'+returnTo.index+'\"]'));}else{cover.hidden=false;reader.hidden=true;activeMenu(document.querySelector('[data-menu-home]'));}return;}
-});
-
 /* Lista de equipaje: persistencia local */
 const PACK_KEY='andrea-packing-v1';
 const packItems=[...document.querySelectorAll('[data-pack]')];
