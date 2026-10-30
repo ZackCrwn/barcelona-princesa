@@ -32,3 +32,33 @@ const budgetTotal=document.querySelector('#budget-total');
 function updateBudget(){if(!budgetTotal)return;const total=budgetFields.reduce((n,x)=>n+(Number(x.value)||0),0);budgetTotal.textContent=new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(total);localStorage.setItem('andrea-budget-v1',JSON.stringify(budgetFields.map(x=>x.value)));}
 try{const saved=JSON.parse(localStorage.getItem('andrea-budget-v1')||'[]');budgetFields.forEach((x,i)=>x.value=saved[i]||'')}catch{}
 budgetFields.forEach(x=>x.addEventListener('input',updateBudget));updateBudget();
+
+/* Respaldo completo del diario para transferir avances entre dispositivos. */
+(() => {
+ const keys=['andrea-packing-v1','andrea-visited-v1','andrea-budget-v1','barcelona-ahorro-v1','andrea-drawing-v1'];
+ const exportButton=document.querySelector('#export-trip-backup');
+ const importInput=document.querySelector('#import-trip-backup');
+ if(!exportButton||!importInput)return;
+ exportButton.addEventListener('click',()=>{
+   const payload={format:'andrea-trip-backup',version:1,createdAt:new Date().toISOString(),data:{}};
+   keys.forEach(k=>{const value=localStorage.getItem(k);if(value!==null)payload.data[k]=value;});
+   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+   const url=URL.createObjectURL(blob);const a=document.createElement('a');
+   a.href=url;a.download='respaldo-diario-andrea.json';a.click();
+   setTimeout(()=>URL.revokeObjectURL(url),1000);
+ });
+ importInput.addEventListener('change',async()=>{
+   const file=importInput.files?.[0];if(!file)return;
+   try{
+     const backup=JSON.parse(await file.text());
+     if(backup.format!=='andrea-trip-backup'||backup.version!==1||!backup.data||typeof backup.data!=='object')throw new Error('Formato no reconocido');
+     const valid=keys.filter(k=>typeof backup.data[k]==='string');
+     if(!valid.length)throw new Error('No hay datos compatibles en el respaldo');
+     if(!confirm('Se restaurarán '+valid.length+' grupos de datos en este dispositivo. Los datos actuales de esos grupos serán reemplazados. ¿Continuar?'))return;
+     valid.forEach(k=>localStorage.setItem(k,backup.data[k]));
+     alert('Respaldo restaurado. La página se actualizará para cargar tus avances.');
+     location.reload();
+   }catch(e){alert('No se pudo restaurar el archivo. Usa una copia exportada desde este diario.');}
+   finally{importInput.value='';}
+ });
+})();
