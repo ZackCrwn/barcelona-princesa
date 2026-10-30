@@ -136,3 +136,10 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .saving-tools{display:flex;gap:10px;align-items:center;margin-top:14px}
 .saving-empty{color:var(--muted);font-size:12px}
 @media(max-width:620px){.saving-dashboard{grid-template-columns:1fr}.saving-stats strong{font-size:19px}.saving-tools{flex-wrap:wrap}}
+
+/* Navegación: un único elemento seleccionado, hover claramente distinto */
+.menu-link{position:relative}
+.menu-link:hover:not(.active){background:#fbf5f6;color:#786675}
+.menu-link.active{background:#f1e1e8;color:#76566b;box-shadow:inset 3px 0 0 #b7839a}
+.menu-link.active:hover{background:#f1e1e8}
+.menu-link:focus-visible{outline:2px solid #b7839a;outline-offset:2px}
