@@ -347,3 +347,29 @@ button,.essential-link,.chapter,.envelope,.place-card{
  .menu-link span .fairy-icon{width:21px;height:21px}
  .essential-link .fairy-icon{width:25px;height:25px}
 }
+
+
+/* PORTADA ANDREA · encuadre vertical sin márgenes laterales */
+.cover-image-frame{
+ max-width:660px;
+ width:100%;
+ padding:12px;
+ display:grid;
+ justify-items:center;
+}
+.cover-inline-image{
+ display:block;
+ width:min(100%,520px);
+ height:auto;
+ aspect-ratio:0.85 / 1;
+ object-fit:cover;
+ object-position:center;
+ max-height:none;
+ margin:0 auto;
+ border-radius:5px;
+}
+.cover-image-frame .cover-actions{margin:16px 0 4px}
+@media(max-width:620px){
+ .cover-image-frame{max-width:100%;padding:7px}
+ .cover-inline-image{width:min(100%,460px);max-height:none}
+}
