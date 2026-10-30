@@ -146,3 +146,9 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 /* FIX CRÍTICO: los estilos de portada y páginas no deben anular el atributo hidden */
 [hidden]{display:none !important}
+
+/* Paneles independientes: el lector nunca debe verse detrás */
+#standalone-panel:not([hidden]) ~ #reader{display:none!important}
+#standalone-panel[hidden] ~ #reader{display:block}
+#standalone-panel:not([hidden]){display:block!important}
+#standalone-panel:not([hidden]) .standalone-view:not([hidden]){display:block!important}
