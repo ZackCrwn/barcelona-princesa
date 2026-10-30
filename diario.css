@@ -99,3 +99,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 /* Sin controles de paginación: navegación exclusiva desde el menú lateral */
 .page-nav,.footer-note{display:none!important}
+
+/* Respeta el atributo hidden incluso en elementos con display definido por estilos de componente */
+[hidden]{display:none!important}
