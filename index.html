@@ -79,14 +79,21 @@
  const cover=$('#cover'),reader=$('#reader'),panel=$('#standalone-panel');
  const pages=Array.from(document.querySelectorAll('#reader .book-content'));
  let returnTo={type:'cover',index:0};
- function mark(button){document.querySelectorAll('.menu-link').forEach(x=>x.classList.toggle('active',x===button));}
+ function mark(button){
+  document.querySelectorAll('.menu-link').forEach(x=>{
+   const active=x===button;
+   x.classList.toggle('active',active);
+   if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current');
+  });
+ }
  function page(n,button){
   if(!pages.length)return;
   n=Math.max(0,Math.min(pages.length-1,Number(n)||0));
+  const selected=button||document.querySelector('[data-menu-page="'+n+'"]');
   returnTo={type:'reader',index:n};
   cover.hidden=true;panel.hidden=true;reader.hidden=false;
-  pages.forEach((p,i)=>p.classList.toggle('active',i===n));
-  mark(button);window.scrollTo(0,0);
+  pages.forEach((p,i)=>{p.classList.toggle('active',i===n);p.hidden=i!==n;});
+  mark(selected);window.scrollTo({top:0,behavior:'auto'});
  }
  function separate(name,button){
   if(panel.hidden)returnTo={type:cover.hidden?(reader.hidden?'cover':'reader'):'cover',index:pages.findIndex(p=>p.classList.contains('active'))};
@@ -95,6 +102,8 @@
   const view=$('#standalone-'+name);if(view)view.hidden=false;
   mark(button);window.scrollTo(0,0);
  }
+ document.querySelectorAll('#reader .book-content').forEach((p,i)=>{p.hidden=true;p.classList.remove('active');});
+ mark(document.querySelector('[data-menu-home]'));
  const savings=$('#saving-section');
  if(savings&&!$('#standalone-savings').contains(savings))$('#standalone-savings').appendChild(savings);
  const savingsChapter=savings&&savings.closest('.book-content');
@@ -103,9 +112,9 @@
  if(backup&&$('#backup-tools-slot')&&!$('#backup-tools-slot').contains(backup))$('#backup-tools-slot').appendChild(backup);
  document.addEventListener('click',function(e){
   const b=e.target.closest('button');if(!b)return;
-  if(b.matches('[data-menu-home]')){cover.hidden=false;reader.hidden=true;panel.hidden=true;returnTo={type:'cover',index:0};mark(b);window.scrollTo(0,0);}
-  else if(b.matches('[data-menu-page]'))page(b.dataset.menuPage,b);
-  else if(b.matches('[data-menu-panel]'))separate(b.dataset.menuPanel,b);
+  if(b.matches('[data-menu-home]')){e.preventDefault();cover.hidden=false;reader.hidden=true;panel.hidden=true;pages.forEach(p=>{p.hidden=true;p.classList.remove('active')});returnTo={type:'cover',index:0};mark(b);window.scrollTo({top:0,behavior:'auto'});}
+  else if(b.matches('[data-menu-page]')){e.preventDefault();page(b.dataset.menuPage,b);}
+  else if(b.matches('[data-menu-panel]')){e.preventDefault();separate(b.dataset.menuPanel,b);}
   else if(b.matches('#open-book'))page(0,document.querySelector('[data-menu-page="0"]'));
   else if(b.matches('[data-page]'))page(b.dataset.page,document.querySelector('[data-menu-page="'+b.dataset.page+'"]'));
   else if(b.matches('[data-direct-page]'))page(b.dataset.directPage,document.querySelector('[data-menu-page="'+b.dataset.directPage+'"]'));
