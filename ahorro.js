@@ -1,5 +1,6 @@
 /* Plan de ahorro Barcelona: los datos se guardan en este navegador. */
 (() => {
+  if (!document.querySelector('#saving-settings')) return;
   const KEY = "barcelona-ahorro-v1";
   const defaults = { goal: 50000, targetDate: "2027-02-01", movements: [] };
   let state;
