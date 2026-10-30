@@ -74,11 +74,13 @@
  function page(n,button){
   if(!pages.length)return;
   n=Math.max(0,Math.min(pages.length-1,Number(n)||0));
+  returnTo={type:'reader',index:n};
   cover.hidden=true;panel.hidden=true;reader.hidden=false;
   pages.forEach((p,i)=>p.classList.toggle('active',i===n));
   mark(button);window.scrollTo(0,0);
  }
  function separate(name,button){
+  if(panel.hidden)returnTo={type:cover.hidden?(reader.hidden?'cover':'reader'):'cover',index:pages.findIndex(p=>p.classList.contains('active'))};
   cover.hidden=true;reader.hidden=true;panel.hidden=false;
   document.querySelectorAll('.standalone-view').forEach(x=>x.hidden=true);
   const view=$('#standalone-'+name);if(view)view.hidden=false;
@@ -92,7 +94,7 @@
  if(backup&&$('#backup-tools-slot')&&!$('#backup-tools-slot').contains(backup))$('#backup-tools-slot').appendChild(backup);
  document.addEventListener('click',function(e){
   const b=e.target.closest('button');if(!b)return;
-  if(b.matches('[data-menu-home]')){cover.hidden=false;reader.hidden=true;panel.hidden=true;mark(b);window.scrollTo(0,0);}
+  if(b.matches('[data-menu-home]')){cover.hidden=false;reader.hidden=true;panel.hidden=true;returnTo={type:'cover',index:0};mark(b);window.scrollTo(0,0);}
   else if(b.matches('[data-menu-page]'))page(b.dataset.menuPage,b);
   else if(b.matches('[data-menu-panel]'))separate(b.dataset.menuPanel,b);
   else if(b.matches('#open-book'))page(0,document.querySelector('[data-menu-page="0"]'));
