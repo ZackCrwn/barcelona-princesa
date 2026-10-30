@@ -5,12 +5,19 @@ const backupTools=document.querySelector('.backup-tools');
 if(backupTools)document.querySelector('#backup-tools-slot').appendChild(backupTools);
 const pages=[...document.querySelectorAll('.book-content')];let current=0;
 const show=n=>{current=Math.max(0,Math.min(pages.length-1,n));pages.forEach((p,i)=>p.classList.toggle('active',i===current));document.querySelector('#page-count').textContent=(current+1)+' / '+pages.length;document.querySelector('#prev').disabled=current===0;document.querySelector('#next').textContent=current===pages.length-1?'Volver al índice':'Siguiente página →';};
-document.querySelector('#open-book').addEventListener('click',()=>{document.querySelector('#cover').hidden=true;document.querySelector('#reader').hidden=false;show(0)});
+const cover=document.querySelector('#cover'),reader=document.querySelector('#reader'),panel=document.querySelector('#standalone-panel');
+function activeMenu(button){document.querySelectorAll('.menu-link').forEach(x=>x.classList.toggle('active',x===button));}
+function openMenuPage(n,button){cover.hidden=true;panel.hidden=true;reader.hidden=false;show(n);activeMenu(button);}
+function openMenuPanel(name,button){cover.hidden=true;reader.hidden=true;panel.hidden=false;document.querySelectorAll('.standalone-view').forEach(v=>v.hidden=true);const target=document.querySelector('#standalone-'+name);if(target)target.hidden=false;activeMenu(button);}
+document.querySelector('#open-book').addEventListener('click',()=>openMenuPage(0,document.querySelector('[data-menu-page="0"]')));
+document.querySelectorAll('[data-menu-home]').forEach(b=>b.addEventListener('click',()=>{cover.hidden=false;reader.hidden=true;panel.hidden=true;activeMenu(b);}));
+document.querySelectorAll('[data-menu-page]').forEach(b=>b.addEventListener('click',()=>openMenuPage(Number(b.dataset.menuPage),b)));
+document.querySelectorAll('[data-menu-panel]').forEach(b=>b.addEventListener('click',()=>openMenuPanel(b.dataset.menuPanel,b)));
 document.querySelector('#prev').addEventListener('click',()=>show(current-1));document.querySelector('#next').addEventListener('click',()=>show(current===pages.length-1?0:current+1));
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.page))));
-document.querySelectorAll('[data-open-panel]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('#cover').hidden=true;document.querySelector('#reader').hidden=true;document.querySelector('#standalone-panel').hidden=false;document.querySelectorAll('.standalone-view').forEach(v=>v.hidden=true);const target=document.querySelector('#standalone-'+b.dataset.openPanel);if(target)target.hidden=false;}));
-document.querySelectorAll('[data-close-panel]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('#standalone-panel').hidden=true;document.querySelector('#cover').hidden=false;}));
-document.querySelectorAll('[data-direct-page]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('#cover').hidden=true;document.querySelector('#reader').hidden=false;show(Number(b.dataset.directPage));}));
+document.querySelectorAll('[data-open-panel]').forEach(b=>b.addEventListener('click',()=>openMenuPanel(b.dataset.openPanel,document.querySelector('[data-menu-panel="'+b.dataset.openPanel+'"]'))));
+document.querySelectorAll('[data-close-panel]').forEach(b=>b.addEventListener('click',()=>{panel.hidden=true;cover.hidden=false;activeMenu(document.querySelector('[data-menu-home]'));}));
+document.querySelectorAll('[data-direct-page]').forEach(b=>b.addEventListener('click',()=>openMenuPage(Number(b.dataset.directPage),document.querySelector('[data-menu-page="'+b.dataset.directPage+'"]'))));
 
 /* Lista de equipaje: persistencia local */
 const PACK_KEY='andrea-packing-v1';
