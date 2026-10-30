@@ -68,7 +68,7 @@
 (function(){
  const $=s=>document.querySelector(s);
  const cover=$('#cover'),reader=$('#reader'),panel=$('#standalone-panel');
- const pages=Array.from(document.querySelectorAll('#reader .book-content'));
+ const pages=Array.from(document.querySelectorAll('#reader .book-content'));\n let returnTo={type:'cover',index:0};
  function mark(button){document.querySelectorAll('.menu-link').forEach(x=>x.classList.toggle('active',x===button));}
  function page(n,button){
   if(!pages.length)return;
@@ -98,7 +98,7 @@
   else if(b.matches('[data-page]'))page(b.dataset.page,document.querySelector('[data-menu-page="'+b.dataset.page+'"]'));
   else if(b.matches('[data-direct-page]'))page(b.dataset.directPage,document.querySelector('[data-menu-page="'+b.dataset.directPage+'"]'));
   else if(b.matches('[data-open-panel]'))separate(b.dataset.openPanel,document.querySelector('[data-menu-panel="'+b.dataset.openPanel+'"]'));
-  else if(b.matches('[data-close-panel]')){panel.hidden=true;cover.hidden=false;mark(document.querySelector('[data-menu-home]'));window.scrollTo(0,0);}
+  else if(b.matches('[data-close-panel]')){panel.hidden=true;if(returnTo.type==='reader')page(returnTo.index,document.querySelector('[data-menu-page=\"'+returnTo.index+'\"]'));else{cover.hidden=false;reader.hidden=true;mark(document.querySelector('[data-menu-home]'));window.scrollTo(0,0);}}
  },true);
 })();
 </script></body></html>
