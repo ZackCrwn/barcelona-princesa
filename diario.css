@@ -96,3 +96,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .menu-footer{margin-top:auto;padding:18px 8px 3px;border-top:1px solid #eddee1;color:#aa8e9c;font:italic 14px 'Cormorant Garamond',serif;line-height:1.5}
 .topbar{grid-column:2;grid-row:1}.book{grid-column:2;grid-row:2;min-width:0;width:100%}
 @media(max-width:760px){.book-shell{display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto;margin:0;padding:8px;border-radius:0;gap:8px}.side-menu{grid-column:1;grid-row:1;position:relative;top:auto;min-height:0;padding:10px;border-radius:14px}.menu-brand{padding:3px 7px 9px}.menu-nav{display:flex;gap:5px;overflow-x:auto;padding:8px 0 3px;scrollbar-width:thin}.menu-caption{display:none}.menu-link{flex:0 0 auto;width:auto;white-space:nowrap;padding:9px 11px}.menu-link span{width:auto}.menu-footer{display:none}.topbar{grid-column:1;grid-row:2;padding:7px 5px}.book{grid-column:1;grid-row:3}}
+
+/* Sin controles de paginación: navegación exclusiva desde el menú lateral */
+.page-nav,.footer-note{display:none!important}
