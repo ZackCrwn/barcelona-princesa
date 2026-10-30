@@ -25,11 +25,30 @@
 <div class="filters" id="filters"><button class="filter active" data-filter="todos">Todos</button><button class="filter" data-filter="gratis">Gratis</button><button class="filter" data-filter="pago">De pago</button></div>
 <div class="place-grid" id="places"></div></section>
 <section class="route-section" id="ruta"><p class="eyebrow">UN PLAN SUAVE</p><h2>Cuatro días en Barcelona.</h2><div class="day-grid" id="days"></div></section>
+
+<section class="saving-section" id="ahorro">
+  <div class="saving-heading"><div><p class="eyebrow">UN SUEÑO QUE SE CONSTRUYE POQUITO A POCO</p><h2>Mi ahorro para<br><em>Barcelona.</em></h2><p class="muted">Registra cada apartado, revisa cuánto falta y ajusta la meta cuando lo necesites.</p></div><div class="saving-heart">♡<small>pasito a pasito</small></div></div>
+  <div class="saving-dashboard">
+    <div class="saving-main">
+      <div class="saving-stats"><article><span>AHORRO ACUMULADO</span><strong id="saving-total">$0</strong></article><article><span>FALTA POR AHORRAR</span><strong id="saving-remaining">$50,000</strong></article></div>
+      <div class="progress-label"><span>Progreso de la meta</span><strong id="saving-progress">0%</strong></div><div class="progress-track"><div id="saving-bar"></div></div>
+      <div class="saving-recommendations"><article><small>AHORRO MENSUAL SUGERIDO</small><strong id="saving-monthly">$0</strong></article><article><small>AHORRO SEMANAL SUGERIDO</small><strong id="saving-weekly">$0</strong></article><article><small>TIEMPO PARA LA META</small><strong id="saving-days">—</strong></article></div>
+    </div>
+    <div class="saving-edit">
+      <h3>Configura tu meta</h3><form id="saving-settings"><label>Meta total en pesos<input id="saving-goal" type="number" min="1" step="100" required></label><label>Fecha objetivo<input id="saving-date" type="date" required></label><button class="saving-button" type="submit">Actualizar mi meta</button></form>
+    </div>
+  </div>
+  <div class="saving-lower">
+    <div class="saving-add"><h3>Registrar movimiento</h3><form id="saving-form"><label>Tipo<select id="saving-type"><option value="deposito">Ahorro / depósito</option><option value="retiro">Retiro</option></select></label><label>Cantidad en MXN<input id="saving-amount" type="number" min="1" step="1" placeholder="Ej. 500" required></label><label>Fecha<input id="saving-movement-date" type="date" required></label><label>Nota (opcional)<input id="saving-note" type="text" maxlength="80" placeholder="Ej. ahorro de quincena"></label><button class="saving-button" type="submit">＋ Guardar movimiento</button></form></div>
+    <div class="saving-history"><div class="saving-history-head"><h3>Historial de ahorro</h3><button type="button" id="saving-export" class="text-button">Descargar respaldo ↗</button></div><div id="saving-movements"></div><label class="import-label">Restaurar respaldo JSON<input id="saving-import" type="file" accept="application/json,.json"></label></div>
+  </div>
+  <p class="saving-note">♡ Tus registros se guardan en este navegador. Descarga un respaldo para conservarlos o pasarlos a otro dispositivo.</p>
+</section>
 <section class="budget" id="presupuesto"><div><p class="eyebrow">SIN CONTAR VUELOS NI ALOJAMIENTO</p><h2>Presupuesto orientativo.</h2><p class="muted">Estimación por persona para 4 días. Puede bajar si aprovecha que sus anfitriones le ofrecen algunas comidas.</p></div><div class="budget-cards"><article><span>AHORRANDO</span><strong>220–300 €</strong><small>Comidas sencillas, transporte y algunas entradas.</small></article><article><span>CON MÁS COMODIDAD</span><strong>320–480 €</strong><small>Más visitas, cafés y comidas variadas.</small></article></div></section>
 <section class="checklist"><div><p class="eyebrow">UNA LISTA CARIÑOSA</p><h2>Que no falte nada.</h2></div><div class="checks"><label><input type="checkbox"> Calzado cómodo</label><label><input type="checkbox"> Chaqueta y capas</label><label><input type="checkbox"> Paraguas plegable</label><label><input type="checkbox"> Batería externa</label><label><input type="checkbox"> Reservas y documentos</label><label><input type="checkbox"> Botella reutilizable</label></div></section>
 </main>
 <footer><span>Hecha con cariño para ti ♡</span><span>Barcelona · febrero 2027</span></footer>
-<script src="data.js"></script><script>
+<script src="data.js"></script><script src="ahorro.js"></script><script>
 const placesRoot=document.querySelector('#places');
 function renderPlaces(filter='todos'){placesRoot.innerHTML=BARCELONA_PLACES.filter(p=>filter==='todos'||p.type===filter).map(p=>`<article class="place-card"><div class="place-top"><span class="place-icon">${p.icon}</span><span class="tag ${p.type}">${p.type==='gratis'?'GRATIS':'DE PAGO'}</span></div><h3>${p.name}</h3><p>${p.description}</p><div class="price">${p.price}</div><p class="tip">♡ ${p.tip}</p><a href="${p.url}" target="_blank" rel="noopener">Consultar sitio oficial ↗</a></article>`).join('')}
 document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderPlaces(b.dataset.filter)}));
