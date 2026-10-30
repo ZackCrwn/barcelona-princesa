@@ -373,3 +373,71 @@ button,.essential-link,.chapter,.envelope,.place-card{
  .cover-image-frame{max-width:100%;padding:7px}
  .cover-inline-image{width:min(100%,460px);max-height:none}
 }
+
+
+/* DETALLES FAIRYCORE DECORATIVOS · no son controles de interfaz */
+@keyframes fairy-drift-a{
+ 0%,100%{transform:translate3d(0,0,0) rotate(-5deg)}
+ 50%{transform:translate3d(4px,-9px,0) rotate(4deg)}
+}
+@keyframes fairy-drift-b{
+ 0%,100%{transform:translate3d(0,0,0) rotate(5deg)}
+ 50%{transform:translate3d(-5px,-7px,0) rotate(-4deg)}
+}
+.book-content,.standalone-panel{isolation:isolate;overflow:hidden}
+.book-content:before{
+ content:"";position:absolute;z-index:-1;pointer-events:none;
+ width:94px;height:94px;left:22px;top:18px;
+ background:url("assets/branch.png") center/contain no-repeat;
+ opacity:.16;transform:rotate(-18deg);
+ animation:fairy-drift-a 10s ease-in-out infinite;
+}
+.book-content:after{
+ content:"";position:absolute;z-index:0;pointer-events:none;
+ width:39px;height:39px;right:28px;top:25px;
+ background:url("assets/flower.png") center/contain no-repeat;
+ opacity:.34;animation:fairy-drift-b 8s ease-in-out infinite;
+}
+.standalone-panel:before{
+ content:"";position:absolute;pointer-events:none;z-index:0;
+ width:72px;height:72px;right:24px;top:22px;
+ background:url("assets/tulip.png") center/contain no-repeat;
+ opacity:.18;animation:fairy-drift-a 11s ease-in-out infinite;
+}
+.book-content>* ,.standalone-panel>*{position:relative;z-index:1}
+.note-card,.itinerary-card,.place-card,.saving-main,.saving-edit,.saving-add,.saving-history{
+ position:relative;overflow:hidden;
+}
+.note-card:after,.itinerary-card:after,.place-card:after{
+ content:"";position:absolute;right:12px;top:12px;
+ width:24px;height:24px;pointer-events:none;
+ background:url("assets/flower.png") center/contain no-repeat;
+ opacity:.23;animation:fairy-drift-b 9s ease-in-out infinite;
+}
+.note-card:nth-of-type(3n):after,.place-card:nth-child(3n):after{
+ background-image:url("assets/leaf.png");width:28px;height:28px;opacity:.25;
+}
+.itinerary-card:after{background-image:url("assets/bow.png");width:22px;height:22px;opacity:.2}
+.letter-grid{position:relative}
+.letter-grid:after{
+ content:"";position:absolute;right:-3px;bottom:-8px;width:44px;height:44px;
+ background:url("assets/butterfly.png") center/contain no-repeat;
+ opacity:.2;pointer-events:none;animation:fairy-drift-a 9s ease-in-out infinite;
+}
+.chapter-list{position:relative}
+.chapter-list:after{
+ content:"";position:absolute;right:-2px;top:-18px;width:30px;height:30px;
+ background:url("assets/leaf.png") center/contain no-repeat;
+ opacity:.24;pointer-events:none;animation:fairy-drift-b 8s ease-in-out infinite;
+}
+@media(max-width:620px){
+ .book-content:before{width:62px;height:62px;left:7px;top:8px;opacity:.12}
+ .book-content:after{width:27px;height:27px;right:13px;top:12px}
+ .standalone-panel:before{width:48px;height:48px;right:10px;top:10px}
+ .note-card:after,.itinerary-card:after,.place-card:after{width:19px;height:19px;right:8px;top:8px}
+}
+@media(prefers-reduced-motion:reduce){
+ .book-content:before,.book-content:after,.standalone-panel:before,
+ .note-card:after,.itinerary-card:after,.place-card:after,
+ .letter-grid:after,.chapter-list:after{animation:none!important}
+}
