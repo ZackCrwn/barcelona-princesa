@@ -526,3 +526,20 @@ button,.essential-link,.chapter,.envelope,.place-card{
  .topbar strong{font-size:22px}
  .topbar span{font-size:7px}
 }
+
+/* Euro al día */
+.exchange-panel,.exchange-calculator{margin:18px 0}
+.exchange-status{display:flex;justify-content:space-between;gap:12px;align-items:center;color:#806b78;font-size:12px}
+.exchange-status small{font-size:11px;text-align:right}
+.exchange-rate-main{display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 12px 20px}
+.exchange-rate-main small,.exchange-rate-grid article small,.exchange-result small{font-size:10px;letter-spacing:.12em;color:#927b89;font-weight:700}
+.exchange-rate-main strong{font-size:clamp(34px,7vw,48px);line-height:1.2;color:#79596d;margin:8px 0}
+.exchange-rate-main span,.exchange-rate-grid article span{font-size:12px;color:#927f89}
+.exchange-rate-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.exchange-rate-grid article{background:#fff9f8;border:1px solid #efdee5;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:7px}
+.exchange-rate-grid article strong{font-size:23px;color:#79596d}
+.exchange-calculator label{display:flex;flex-direction:column;gap:7px;margin:12px 0;color:#806b78;font-size:13px}
+.exchange-calculator input,.exchange-calculator select{width:100%;min-height:46px;padding:10px 12px;border:1px solid #e5d2dc;border-radius:10px;background:#fff;color:#574653;font:inherit}
+.exchange-result{margin-top:16px;padding:18px;background:#f8edf1;border-radius:14px;display:flex;flex-direction:column;gap:7px}
+.exchange-result strong{font-size:27px;color:#79596d}
+@media(max-width:520px){.exchange-status{align-items:flex-start;flex-direction:column}.exchange-rate-grid{grid-template-columns:1fr}.exchange-rate-grid article strong{font-size:21px}}
