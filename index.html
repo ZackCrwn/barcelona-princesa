@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=43"></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8edf0"><meta name="description" content="El diario mágico de Andrea: un regalo para acompañar su aventura en Barcelona."><title>El diario mágico de Andrea</title><link rel="stylesheet" href="diario.css?v=44"></head>
 <body><div class="book-shell"><aside class="side-menu" id="side-menu"><div class="menu-brand"><img class="fairy-icon brand-icon" src="assets/flower.png" alt=""><strong>Diario mágico</strong><small>BARCELONA · 2027</small></div><nav class="menu-nav">
 <button class="menu-link active" data-menu-home><span><img class="fairy-icon" src="assets/home.png" alt=""></span> Portada</button>
 <div class="menu-caption">EL DIARIO</div><button class="menu-link" data-menu-page="0"><span><img class="fairy-icon" src="assets/heart.png" alt=""></span> Bienvenida</button><button class="menu-link" data-menu-page="1"><span><img class="fairy-icon" src="assets/journal.png" alt=""></span> Índice</button>
@@ -56,39 +56,61 @@
 <button class="chapter" data-page="8"><span>08 · Al volver</span><small>Un recuerdo que se queda</small></button>
 </div></section>
 <section id="diary-page-2" class="book-content"><div class="chapter-label">Capítulo 01 · Preparativos</div><h2>Antes de abrir la puerta.</h2><p class="lead">Prepara lo importante con tiempo. Esta lista reúne la maleta y los documentos para viajar a Barcelona en febrero de 2027. Marca cada tarea cuando esté lista; el progreso se guarda en este dispositivo.</p>
-<div class="note-card"><h3>Mi maleta</h3><div id="packing-list" class="packing-list">
-<label><input type="checkbox" data-pack="shoes"> Calzado cómodo y ya probado</label>
-<label><input type="checkbox" data-pack="coat"> Chaqueta y capas ligeras</label>
-<label><input type="checkbox" data-pack="umbrella"> Paraguas plegable</label>
-<label><input type="checkbox" data-pack="charger"> Batería externa y cargador</label>
-<label><input type="checkbox" data-pack="meds"> Medicamentos y artículos personales</label>
-<label><input type="checkbox" data-pack="cards"> Tarjetas, efectivo y avisos al banco</label>
-<label><input type="checkbox" data-pack="souvenir"> Espacio en la maleta para recuerdos</label>
-</div><p class="packing-progress" id="packing-progress">0 de 7 listos</p></div>
+<div class="note-card"><h3>Mi maleta pequeña</h3>
+<p class="small">La idea es viajar ligero y evitar pagar equipaje extra. Antes de salir, revisa las medidas y el peso incluidos en el boleto: cambian según la aerolínea.</p>
+<div id="packing-list" class="packing-list">
+<label><input type="checkbox" data-pack="shoes"> Un par de zapatos cómodos para caminar</label>
+<label><input type="checkbox" data-pack="clothes"> Ropa combinable para varios días y ropa interior</label>
+<label><input type="checkbox" data-pack="coat"> Una chamarra abrigadora y una capa ligera</label>
+<label><input type="checkbox" data-pack="rain"> Paraguas compacto o impermeable ligero</label>
+<label><input type="checkbox" data-pack="toiletries"> Bolsa pequeña con artículos de higiene básicos</label>
+<label><input type="checkbox" data-pack="charger"> Cargador, cable y batería externa (en equipaje de mano)</label>
+<label><input type="checkbox" data-pack="meds"> Medicamentos personales y documentos médicos, siempre a mano</label>
+<label><input type="checkbox" data-pack="souvenir"> Dejar un pequeño espacio para recuerdos ligeros</label>
+</div><p class="packing-progress" id="packing-progress">0 de 8 listos</p>
+<p class="small">Para los recuerdos: prioriza postales, imanes, separadores o detalles planos y pequeños. No hace falta llevar una bolsa extra ni comprar objetos voluminosos.</p></div>
+
+<div class="note-card"><h3>Internet al llegar · eSIM</h3>
+<p>Una eSIM puede darle datos móviles en Barcelona desde que aterrice, sin buscar una tienda. Antes de comprarla, comprueba que su teléfono sea compatible con eSIM y esté desbloqueado para otras compañías.</p>
+<div class="packing-list">
+<label><input type="checkbox" data-doc="esim-compatible"> Confirmar compatibilidad eSIM y que el teléfono esté desbloqueado.</label>
+<label><input type="checkbox" data-doc="esim-buy"> Comprar un paquete de datos para España o Europa antes del viaje.</label>
+<label><input type="checkbox" data-doc="esim-install"> Instalar la eSIM con Wi-Fi antes de salir de México.</label>
+<label><input type="checkbox" data-doc="esim-activate"> Al aterrizar, activar la eSIM para datos y desactivar la itinerancia de datos de la línea mexicana.</label>
+</div>
+<p class="small">Puede conservar su número mexicano y WhatsApp. No borre su SIM principal; solo configure la eSIM como línea de datos. La compatibilidad y los pasos exactos dependen del modelo del teléfono.</p></div>
+
 <div class="note-card"><h3>Documentos para viajar</h3>
 <p class="small">Andrea viaja con pasaporte mexicano por turismo, por menos de 90 días.</p>
-<h3>Pasaporte</h3>
-<p>Debe estar en buen estado, expedido hace menos de 10 años y vigente al menos 3 meses después de la fecha de salida de Europa. Para viajar con margen, se recomienda que tenga 6 meses de vigencia al iniciar el viaje.</p>
-<p class="small">Si necesita tramitarlo o renovarlo: <a href="https://citas.sre.gob.mx/" target="_blank" rel="noopener noreferrer">citas SRE ↗</a>.</p>
-<div class="packing-list"><label><input type="checkbox" data-doc="passport"> Pasaporte vigente y con 6 meses recomendados.</label><label><input type="checkbox" data-doc="passport-copy"> Copia digital y física del pasaporte.</label></div>
-<h3>Entrada como turista</h3>
-<p>Las personas mexicanas no necesitan visa para turismo de hasta 90 días dentro de un periodo de 180 días. Revisa si ETIAS ya es obligatorio para febrero de 2027 y tramítalo solo en el <a href="https://travel-europe.europa.eu/etias" target="_blank" rel="noopener noreferrer">sitio oficial de la Unión Europea ↗</a>.</p>
-<div class="packing-list"><label><input type="checkbox" data-doc="visa"> Confirmar que el viaje no excede 90 días.</label><label><input type="checkbox" data-doc="etias"> Revisar y tramitar ETIAS si corresponde.</label></div>
-<h3>Vuelos</h3>
-<p>Conservar la reservación de ida y el boleto de regreso, con el nombre igual al del pasaporte.</p>
-<div class="packing-list"><label><input type="checkbox" data-doc="outbound"> Vuelo de ida confirmado.</label><label><input type="checkbox" data-doc="return"> Vuelo de regreso confirmado.</label></div>
-<h3>Alojamiento</h3>
-<p>Si se hospedará en casa de amistades, la persona anfitriona en España debe tramitar la carta de invitación ante la Policía Nacional. Debe cubrir las fechas del viaje.</p>
-<p class="small">Trámite e información: <a href="https://www.policia.es/_es/extranjeria_extranjeros.php" target="_blank" rel="noopener noreferrer">Policía Nacional ↗</a>.</p>
-<div class="packing-list"><label><input type="checkbox" data-doc="invitation"> Carta de invitación oficial recibida.</label><label><input type="checkbox" data-doc="host"> Dirección y teléfono de la persona anfitriona.</label></div>
-<h3>Respaldo económico</h3>
-<p>Si Isaac pagará parte o todo el viaje, Andrea puede llevar la carta de responsabilidad económica junto con el acta de matrimonio, copia de su INE y comprobantes bancarios recientes. Estos documentos respaldan el apoyo, pero no garantizan por sí solos la entrada ni sustituyen automáticamente la comprobación de fondos.</p>
-<div class="packing-list"><label><input type="checkbox" data-doc="support-letter"> Carta de responsabilidad económica de Isaac.</label><label><input type="checkbox" data-doc="marriage"> Copia del acta de matrimonio.</label><label><input type="checkbox" data-doc="sponsor-id"> Copia de identificación de Isaac.</label><label><input type="checkbox" data-doc="bank"> Comprobantes bancarios recientes y fondos disponibles.</label><label><input type="checkbox" data-doc="cards"> Tarjeta habilitada para uso internacional.</label></div>
-<h3>Salud y copias</h3>
-<p>El seguro de viaje es recomendable, aunque no suele ser un requisito general para turistas mexicanos exentos de visa. Lleva la póliza, recetas de medicamentos si aplica y copias de los documentos importantes.</p>
-<p class="small">Seguro: contratar con una aseguradora o proveedor de asistencia de viaje. Registro gratuito y voluntario del viaje: <a href="https://portales.sre.gob.mx/sirme/" target="_blank" rel="noopener noreferrer">SIRME · SRE ↗</a>.</p>
-<div class="packing-list"><label><input type="checkbox" data-doc="insurance"> Seguro de viaje y teléfono de asistencia.</label><label><input type="checkbox" data-doc="medication"> Recetas de medicamentos, si aplica.</label><label><input type="checkbox" data-doc="copies"> Copias digitales e impresas de los documentos.</label><label><input type="checkbox" data-doc="sirme"> Registro SIRME, si lo desea.</label></div>
-<p class="small">Revisar los requisitos oficiales nuevamente antes de febrero de 2027, porque pueden cambiar.</p></div>
+<h3>Pasaporte y entrada</h3>
+<p>El pasaporte debe estar en buen estado, expedido hace menos de 10 años y vigente al menos 3 meses después de la fecha de salida del espacio Schengen. Para viajar con margen, es recomendable que tenga 6 meses de vigencia al iniciar el viaje. Las personas mexicanas no necesitan visa para turismo de hasta 90 días dentro de un periodo de 180 días.</p>
+<p class="small">Trámite o renovación: <a href="https://citas.sre.gob.mx/" target="_blank" rel="noopener noreferrer">citas SRE ↗</a>. Revisa si ETIAS ya es obligatorio para febrero de 2027 en el <a href="https://travel-europe.europa.eu/etias" target="_blank" rel="noopener noreferrer">portal oficial de la Unión Europea ↗</a>.</p>
+<div class="packing-list"><label><input type="checkbox" data-doc="passport"> Pasaporte vigente y en buen estado.</label><label><input type="checkbox" data-doc="passport-copy"> Copia digital y física del pasaporte.</label><label><input type="checkbox" data-doc="etias"> Revisar y tramitar ETIAS si ya corresponde.</label></div>
+<h3>Vuelos y alojamiento</h3>
+<p>Conservar los boletos de ida y regreso con el nombre igual al pasaporte. Si se hospedará en casa de amistades, la persona anfitriona en España debe tramitar la carta de invitación ante la Policía Nacional y cubrir las fechas reales.</p>
+<p class="small">Carta de invitación: <a href="https://www.policia.es/_es/extranjeria_extranjeros.php" target="_blank" rel="noopener noreferrer">Policía Nacional ↗</a>.</p>
+<div class="packing-list"><label><input type="checkbox" data-doc="outbound"> Vuelo de ida confirmado.</label><label><input type="checkbox" data-doc="return"> Vuelo de regreso confirmado.</label><label><input type="checkbox" data-doc="invitation"> Carta de invitación oficial recibida, si se aloja en casa particular.</label><label><input type="checkbox" data-doc="host"> Dirección y teléfono de la persona anfitriona.</label></div>
+<h3>Respaldo económico · BBVA</h3>
+<p>Si Isaac cubrirá los gastos, Andrea puede llevar la carta de responsabilidad económica, el acta de matrimonio y copia de la identificación de Isaac. Para respaldar la capacidad económica, descarga los estados de cuenta desde la app BBVA:</p>
+<ol>
+<li>Abre la app BBVA e inicia sesión.</li>
+<li>Selecciona la cuenta donde recibes tus ingresos o mantienes los fondos.</li>
+<li>Entra a “Estado de cuenta” o “Descargar estado de cuenta”.</li>
+<li>Elige los últimos tres periodos mensuales disponibles y descarga cada PDF.</li>
+<li>Guarda los archivos en el teléfono y lleva copias impresas.</li>
+</ol>
+<p class="small">Los nombres de las opciones pueden variar con las actualizaciones de la app. BBVA también explica cómo consultar y descargar estados de cuenta en su <a href="https://www.bbva.mx/educacion-financiera/banca-digital/cuenta-digital-que-es-estado-de-cuenta.html" target="_blank" rel="noopener noreferrer">guía oficial ↗</a>. Presenta documentos auténticos y recientes; no compartas contraseñas, NIP ni códigos de acceso.</p>
+<div class="packing-list"><label><input type="checkbox" data-doc="support-letter"> Carta de responsabilidad económica firmada por Isaac.</label><label><input type="checkbox" data-doc="marriage"> Copia del acta de matrimonio.</label><label><input type="checkbox" data-doc="sponsor-id"> Copia de identificación de Isaac.</label><label><input type="checkbox" data-doc="bank"> Descargar los últimos tres estados de cuenta BBVA en PDF.</label><label><input type="checkbox" data-doc="funds"> Comprobar fondos disponibles y llevar tarjeta habilitada para uso internacional.</label></div>
+<h3>Medicamentos personales</h3>
+<p>Llevar los medicamentos en su empaque original, dentro del equipaje de mano y en cantidad acorde con la duración del viaje. No los pases a pastilleros sin conservar sus cajas y etiquetas. Pide al médico una receta y un informe firmado y sellado que indique el nombre del medicamento o principio activo, dosis y horario.</p>
+<p><strong>Importante:</strong> algunos principios activos psicotrópicos o estupefacientes están fiscalizados. Si alguno de sus medicamentos está en esa lista, puede necesitar un permiso de la AEMPS para entrar a España. Hay que revisar cada principio activo con su médico y tramitar el permiso antes del viaje; la AEMPS indica un mínimo de 10 días para procesarlo y una validez máxima de 3 meses. No todos los medicamentos psiquiátricos requieren ese permiso.</p>
+<p class="small">Requisitos y solicitud: <a href="https://www.aemps.gob.es/medicamentos-de-uso-humano/estupefacientes-y-psicotropos/certificados-y-permisos-para-el-transporte-de-medicamentos-estupefacientes-y-psicotropos-por-viajeros-en-tratamiento-medico/" target="_blank" rel="noopener noreferrer">AEMPS · Permisos para viajeros ↗</a>. Para dudas de entrada a España: estupefacientes_viajeros@aemps.es. No suspendas ni cambies el tratamiento por el viaje sin indicación médica.</p>
+<div class="packing-list"><label><input type="checkbox" data-doc="medication-boxes"> Medicamentos en sus envases originales y dentro del equipaje de mano.</label><label><input type="checkbox" data-doc="medication-report"> Receta e informe médico firmado y sellado, con principio activo y dosis.</label><label><input type="checkbox" data-doc="medication-check"> Consultar si algún principio activo requiere permiso AEMPS.</label><label><input type="checkbox" data-doc="medication-permit"> Tramitar y llevar el permiso AEMPS, si aplica.</label><label><input type="checkbox" data-doc="medication-quantity"> Llevar solo la cantidad necesaria y conservar los medicamentos durante el trayecto.</label></div>
+<h3>Seguro, copias y últimos detalles</h3>
+<p>El seguro de viaje es recomendable. Guarda póliza, teléfono de asistencia, reservas y copias de los documentos en el móvil sin conexión. El registro SIRME de la SRE es gratuito y voluntario.</p>
+<p class="small">Registro: <a href="https://portales.sre.gob.mx/sirme/" target="_blank" rel="noopener noreferrer">SIRME · SRE ↗</a>. Revisa los requisitos oficiales de nuevo antes de febrero de 2027, porque pueden cambiar.</p>
+<div class="packing-list"><label><input type="checkbox" data-doc="insurance"> Seguro de viaje y teléfono de asistencia.</label><label><input type="checkbox" data-doc="copies"> Copias digitales e impresas de documentos.</label><label><input type="checkbox" data-doc="sirme"> Registro SIRME, si lo desea.</label></div>
+</div>
 <p class="packing-progress" id="documents-progress">0 documentos listos</p>
 <p class="small">Consejo de Bicha: no llenes cada minuto. A veces el mejor recuerdo aparece cuando no estás buscando nada.</p></section><section id="diary-page-3" class="book-content"><div class="chapter-label">Capítulo 02 · Mi presupuesto</div><h2>Un viaje bonito, sin perder de vista los gastos.</h2><p class="lead">Una referencia para organizar el dinero durante cuatro días. El alojamiento y los vuelos no están incluidos. Como algunas comidas estarán cubiertas por tus anfitriones, el gasto real puede ser menor.</p><div class="note-card"><h3>Presupuesto orientativo por persona</h3><p><strong>Plan sencillo: 220–300 €</strong><br>Comidas sencillas, transporte público y algunas entradas.</p><p><strong>Con más comodidad: 320–480 €</strong><br>Más visitas, cafés, comidas variadas y algún capricho.</p><p class="small">Son estimaciones iniciales, no precios garantizados. Conviene revisar tarifas, reservas y transporte antes del viaje.</p></div><div class="note-card"><h3>Mi pequeño control de gastos</h3><p class="small">Anota aquí cuánto quieres destinar a cada cosa. Los importes se pueden cambiar.</p><div class="budget-inputs"><label>Comidas (€)<input class="budget-field" type="number" min="0" placeholder="0"></label><label>Transporte (€)<input class="budget-field" type="number" min="0" placeholder="0"></label><label>Entradas y visitas (€)<input class="budget-field" type="number" min="0" placeholder="0"></label><label>Caprichos y recuerdos (€)<input class="budget-field" type="number" min="0" placeholder="0"></label></div><p><strong>Total planeado: <span id="budget-total">0 €</span></strong></p></div>
 </div></section>
@@ -100,7 +122,7 @@
 <section id="diary-page-7" class="book-content"><div class="chapter-label">Capítulo 07 · Mis páginas libres</div><h2>Este espacio es tuyo.</h2><p class="lead">Dibuja algo que viste, garabatea mientras tomas un café o deja aquí una idea. No tiene que quedar perfecto.</p><div class="draw-wrap"><div class="draw-tools"><label class="small">Color <input id="pen-color" type="color" value="#b87996"></label><label class="small">Trazo <input id="pen-size" type="range" min="1" max="14" value="3"></label><button id="clear-drawing">Borrar</button><button id="save-drawing">Guardar dibujo</button></div><canvas id="drawing" aria-label="Lienzo para dibujar"></canvas></div><p class="small">El dibujo se descarga como imagen PNG en este dispositivo.</p></section>
 <section id="diary-page-8" class="book-content"><div class="chapter-label">Capítulo 08 · Al volver</div><h2>La aventura se queda contigo.</h2><p class="lead">Cuando regreses, este libro seguirá aquí para que recuerdes lo que te hizo sonreír, lo que aprendiste y los pequeños momentos que hicieron especial el viaje.</p><div class="note-card"><h3>Una última página</h3><p class="lead">No importa cuántas ciudades conozcas: ojalá nunca pierdas esa parte de ti que se emociona al descubrir algo nuevo.</p><p class="small">Con todo mi cariño, Isaac ♡</p></div></section>
 
-</div></main></div><script src="data.js?v=24"></script><script src="diario.js?v=29"></script><script src="ahorro.js?v=26"></script><script src="auto-update.js?v=24"></script><script>
+</div></main></div><script src="data.js?v=24"></script><script src="diario.js?v=30"></script><script src="ahorro.js?v=26"></script><script src="auto-update.js?v=24"></script><script>
 /* Navegación estable: asignación directa de destinos */
 (function(){
  const cover=document.getElementById('cover');
