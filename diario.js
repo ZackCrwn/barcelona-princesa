@@ -5,6 +5,14 @@ let packed={};try{packed=JSON.parse(localStorage.getItem(PACK_KEY)||'{}')}catch{
 function renderPacking(){let count=0;packItems.forEach(x=>{x.checked=!!packed[x.dataset.pack];if(x.checked)count++});const out=document.querySelector('#packing-progress');if(out)out.textContent=count+' de '+packItems.length+' listos';}
 packItems.forEach(x=>x.addEventListener('change',()=>{packed[x.dataset.pack]=x.checked;localStorage.setItem(PACK_KEY,JSON.stringify(packed));renderPacking()}));renderPacking();
 
+
+/* Checklist de documentación: progreso guardado en este dispositivo. */
+const DOC_KEY='andrea-documents-v1';
+const docItems=[...document.querySelectorAll('[data-doc]')];
+let docsReady={};try{docsReady=JSON.parse(localStorage.getItem(DOC_KEY)||'{}')}catch{}
+function renderDocuments(){let count=0;docItems.forEach(x=>{x.checked=!!docsReady[x.dataset.doc];if(x.checked)count++});const out=document.querySelector('#documents-progress');if(out)out.textContent=count+' de '+docItems.length+' documentos y tareas listos';}
+docItems.forEach(x=>x.addEventListener('change',()=>{docsReady[x.dataset.doc]=x.checked;localStorage.setItem(DOC_KEY,JSON.stringify(docsReady));renderDocuments()}));renderDocuments();
+
 /* Itinerario y lugares cargados desde data.js */
 const visitedKey='andrea-visited-v1';let visited={};try{visited=JSON.parse(localStorage.getItem(visitedKey)||'{}')}catch{}
 const itinerary=document.querySelector('#itinerary-grid');
@@ -98,7 +106,7 @@ budgetFields.forEach(x=>x.addEventListener('input',updateBudget));updateBudget()
 
 /* Respaldo completo del diario para transferir avances entre dispositivos. */
 (() => {
- const keys=['andrea-packing-v1','andrea-visited-v1','andrea-budget-v1','barcelona-ahorro-v1','andrea-drawing-v1'];
+ const keys=['andrea-packing-v1','andrea-documents-v1','andrea-visited-v1','andrea-budget-v1','barcelona-ahorro-v1','andrea-drawing-v1'];
  const exportButton=document.querySelector('#export-trip-backup');
  const importInput=document.querySelector('#import-trip-backup');
  if(!exportButton||!importInput)return;
