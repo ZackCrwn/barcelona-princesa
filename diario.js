@@ -133,3 +133,53 @@ budgetFields.forEach(x=>x.addEventListener('input',updateBudget));updateBudget()
    finally{importInput.value='';}
  });
 })();
+
+/* Tipo de cambio EUR/MXN: referencia diaria y calculadora */
+(() => {
+ const midEl=document.querySelector('#exchange-mid');
+ if(!midEl)return;
+ const buyEl=document.querySelector('#exchange-buy');
+ const sellEl=document.querySelector('#exchange-sell');
+ const statusEl=document.querySelector('#exchange-status');
+ const updatedEl=document.querySelector('#exchange-updated');
+ const mode=document.querySelector('#exchange-mode');
+ const amount=document.querySelector('#exchange-amount');
+ const amountLabel=document.querySelector('#exchange-amount-label');
+ const result=document.querySelector('#exchange-result');
+ let rate=null, rateDate='';
+ const money=(value,currency)=>new Intl.NumberFormat('es-MX',{style:'currency',currency,maximumFractionDigits:2}).format(value);
+ function calculate(){
+  if(!rate||!amount||!result)return;
+  const value=Math.max(0,Number(amount.value)||0);
+  if(mode.value==='eur'){
+   amountLabel.firstChild.textContent='Cantidad en euros ';
+   result.textContent=money(value*rate,'MXN');
+  }else{
+   amountLabel.firstChild.textContent='Cantidad en pesos mexicanos ';
+   result.textContent=(value/rate).toLocaleString('es-MX',{maximumFractionDigits:2})+' EUR';
+  }
+ }
+ async function refresh(){
+  try{
+   const response=await fetch('https://api.frankfurter.dev/v2/rate/eur/mxn',{cache:'no-store'});
+   if(!response.ok)throw new Error('No se pudo consultar el servicio');
+   const data=await response.json();
+   if(!Number.isFinite(Number(data.rate)))throw new Error('Respuesta inválida');
+   rate=Number(data.rate);rateDate=data.date||'';
+   midEl.textContent=money(rate,'MXN');
+   buyEl.textContent=money(rate*1.02,'MXN');
+   sellEl.textContent=money(rate*0.98,'MXN');
+   statusEl.textContent='Referencia disponible';
+   updatedEl.textContent='Dato publicado: '+(rateDate||'fecha no disponible')+' · consulta '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+   calculate();
+  }catch(error){
+   statusEl.textContent='No se pudo actualizar';
+   updatedEl.textContent='Revisa tu conexión e inténtalo más tarde.';
+   if(!rate)midEl.textContent=buyEl.textContent=sellEl.textContent='—';
+  }
+ }
+ mode?.addEventListener('change',calculate);
+ amount?.addEventListener('input',calculate);
+ refresh();
+ window.setInterval(refresh,30*60*1000);
+})();
